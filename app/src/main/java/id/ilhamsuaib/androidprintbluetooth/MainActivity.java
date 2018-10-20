@@ -1,13 +1,14 @@
 package id.ilhamsuaib.androidprintbluetooth;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,10 +26,13 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, BluetoothHandler.HandlerInterfce {
+@SuppressLint("SetTextI18n")
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, BluetoothHandler.HandlerInterface {
 
-    @BindView(R.id.et_text)EditText etText;
-    @BindView(R.id.tv_status)TextView tvStatus;
+    @BindView(R.id.et_text)
+    EditText etText;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
 
     private final String TAG = MainActivity.class.getSimpleName();
     public static final int RC_BLUETOOTH = 0;
@@ -36,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     public static final int RC_ENABLE_BLUETOOTH = 2;
 
     private BluetoothService mService = null;
-    private BluetoothDevice mDevice = null;
     private boolean isPrinterReady = false;
 
     @Override
@@ -48,14 +51,14 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     @AfterPermissionGranted(RC_BLUETOOTH)
-    private void setupBluetooth(){
+    private void setupBluetooth() {
         String[] params = {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN};
-        if (!EasyPermissions.hasPermissions(this, params)){
+        if (!EasyPermissions.hasPermissions(this, params)) {
             EasyPermissions.requestPermissions(this, "You need bluetooth permission",
                     RC_BLUETOOTH, params);
             return;
         }
-        mService = new BluetoothService(this, new BluetoothHandler(this, this));
+        mService = new BluetoothService(this, new BluetoothHandler(this));
     }
 
     @Override
@@ -92,17 +95,17 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case RC_ENABLE_BLUETOOTH:
                 if (resultCode == RESULT_OK) {
                     Log.i(TAG, "onActivityResult: bluetooth aktif");
-                }else
+                } else
                     Log.i(TAG, "onActivityResult: bluetooth harus aktif untuk menggunakan fitur ini");
                 break;
             case RC_CONNECT_DEVICE:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     String address = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_ADDRESS);
-                    mDevice = mService.getDevByMac(address);
+                    BluetoothDevice mDevice = mService.getDevByMac(address);
                     mService.connect(mDevice);
                 }
                 break;
@@ -110,20 +113,20 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     @OnClick(R.id.btn_print_text)
-    public void printText(@Nullable View view){
-        if (!mService.isAvailable()){
+    public void printText(@Nullable View view) {
+        if (!mService.isAvailable()) {
             Log.i(TAG, "printText: perangkat tidak support bluetooth");
             return;
         }
-        if (isPrinterReady){
-            if (etText.getText().toString().isEmpty()){
+        if (isPrinterReady) {
+            if (etText.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Cant print null text", Toast.LENGTH_SHORT).show();
                 return;
             }
             mService.write(PrinterCommands.ESC_ALIGN_CENTER);
             mService.sendMessage(etText.getText().toString(), "");
             mService.write(PrinterCommands.ESC_ENTER);
-        }else{
+        } else {
             if (mService.isBTopen())
                 startActivityForResult(new Intent(this, DeviceActivity.class), RC_CONNECT_DEVICE);
             else
@@ -132,12 +135,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     @OnClick(R.id.btn_print_image)
-    public void printImage(View view){
-        if (isPrinterReady){
+    public void printImage(View view) {
+        if (isPrinterReady) {
             PrintPic pg = new PrintPic();
             pg.initCanvas(400);
             pg.initPaint();
-            pg.drawImage(0, 0, Environment.getExternalStorageDirectory().getAbsolutePath()+"/Londree/struk_londree.png");
+            pg.drawImage(0, 0, Environment.getExternalStorageDirectory().getAbsolutePath() + "/Londree/struk_londree.png");
             byte[] sendData = pg.printDraw();
             mService.write(PrinterCommands.ESC_ALIGN_CENTER);
             mService.write(sendData);
@@ -145,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     private void requestBluetooth() {
-        if (mService != null){
-            if (!mService.isBTopen()){
+        if (mService != null) {
+            if (!mService.isBTopen()) {
                 Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(intent, RC_ENABLE_BLUETOOTH);
             }

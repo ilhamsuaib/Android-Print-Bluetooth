@@ -1,10 +1,8 @@
 package id.ilhamsuaib.androidprintbluetooth;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.zj.btsdk.BluetoothService;
 
@@ -12,14 +10,12 @@ import com.zj.btsdk.BluetoothService;
  * Created by ilham on 9/15/17.
  */
 
-public class BluetoothHandler extends Handler{
+public class BluetoothHandler extends Handler {
 
     private static final String TAG = BluetoothHandler.class.getSimpleName();
-    private Activity activity;
-    private HandlerInterfce hi;
+    private HandlerInterface hi;
 
-    public BluetoothHandler(Activity activity, HandlerInterfce hi) {
-        this.activity = activity;
+    public BluetoothHandler(HandlerInterface hi) {
         this.hi = hi;
     }
 
@@ -49,7 +45,8 @@ public class BluetoothHandler extends Handler{
         }
     }
 
-    public interface HandlerInterfce {
+    public interface HandlerInterface {
+
         void onDeviceConnected();
 
         void onDeviceConnecting();
