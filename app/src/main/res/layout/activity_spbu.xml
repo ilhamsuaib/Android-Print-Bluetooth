@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        tools:context="id.ilhamsuaib.androidprintbluetooth.nota.PreviewActivity">
+
+        <EditText
+            android:id="@+id/edtNoSpbu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Ex : SPBU.44.502.08"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edtTanggal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Ex : Rabu, 08 November 2018"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/edtJam"
+            app:layout_constraintStart_toStartOf="@+id/edtNoSpbu"
+            app:layout_constraintTop_toBottomOf="@+id/edtNoSpbu" />
+
+        <EditText
+            android:id="@+id/edtJam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:hint="Ex : 10:10:10"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/edtTanggal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtTanggal" />
+
+        <EditText
+            android:id="@+id/edtNomorPompa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Nomor Pompa, Ex : 3"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/edtNomorSelang"
+            app:layout_constraintStart_toStartOf="@+id/edtTanggal"
+            app:layout_constraintTop_toBottomOf="@+id/edtTanggal" />
+
+        <EditText
+            android:id="@+id/edtNomorSelang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:hint="Nomor Selang, Ex : 2"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/edtNomorPompa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtNomorPompa" />
+
+        <EditText
+            android:id="@+id/edtNomorNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nomor Nota, Ex : 234"
+            android:textSize="16sp"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/edtTanggal"
+            app:layout_constraintTop_toBottomOf="@+id/edtNomorSelang" />
+
+        <EditText
+            android:id="@+id/edtJenisBBM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Jenis BBM, Ex : Pertalite"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/edtTanggal"
+            app:layout_constraintTop_toBottomOf="@+id/edtNomorNota" />
+
+        <EditText
+            android:id="@+id/edtLiter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Liter, Ex : 5"
+            android:inputType="number"
+            android:digits="1234567890"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/edtTanggal"
+            app:layout_constraintTop_toBottomOf="@+id/edtJenisBBM" />
+
+        <EditText
+            android:id="@+id/edtHargaLiter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:digits="1234567890."
+            android:hint="Harga Per Liter, Ex : 20.000"
+            android:inputType="number"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/edtLiter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edtLiter"
+            app:layout_constraintTop_toTopOf="@+id/edtLiter" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Total, Rp. 1.000.000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/edtTanggal"
+            app:layout_constraintTop_toBottomOf="@+id/edtHargaLiter" />
+
+        <TextView
+            android:id="@+id/tvThanks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Terima kasih dan selamat jalan"
+            app:layout_constraintStart_toStartOf="@+id/tvTotal"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

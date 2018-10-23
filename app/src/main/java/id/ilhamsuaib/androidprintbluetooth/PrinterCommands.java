@@ -58,4 +58,6 @@ public class PrinterCommands {
 
     public static final byte[] ESC_ENTER = new byte[] { 0x1B, 0x4A, 0x40 };
     public static final byte[] PRINTE_TEST = new byte[] { 0x1D, 0x28, 0x41 };
+
+    public static final String dashLine = "-------------------------------";
 }
